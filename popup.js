@@ -57,7 +57,7 @@ function createWordGroup(title, words, container) {
                 <span class="word-text">${entry.word}</span>
                 <div class="word-actions">
                     <button class="word-btn translate" data-word="${entry.word}">
-                        <i class t="fas fa-language"></i>
+                        <i class="fas fa-language"></i>
                     </button>
                     <button class="word-btn speak" data-word="${entry.word}">
                         <i class="fas fa-volume-up"></i>

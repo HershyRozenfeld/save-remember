@@ -1,83 +1,143 @@
-/* Toolbar Styles */
+/* מעטפת סרגל הכלים */
 #wordToolbar {
-  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
-  border: 1px solid #d1d8e0;
-  border-radius: 10px;
-  padding: 6px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fb 100%);
+  border: none;
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: absolute;
+  z-index: 10000;
 }
 
+#wordToolbar:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* כפתורי הסרגל */
 #wordToolbar img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.2s ease;
+  width: 28px;
+  height: 28px;
+  object-fit: contain; /* שמירה על התמונה במלואה, ללא חיתוך */
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  opacity: 0.8;
+  padding: 6px; /* הגדלת הפאדינג כדי לתת יותר מקום לתמונה */
+  border-radius: 50%;
+  background: #fff; /* רקע לבן לעזור בראות התמונה */
+  overflow: visible; /* מניעת חיתוך חלקים מהתמונה */
 }
 
 #wordToolbar img:hover {
-  transform: scale(1.15);
+  transform: scale(1.2);
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Translation Popup Styles */
+#wordToolbar img:active {
+  transform: scale(0.95);
+}
+
+/* חלונית תרגום */
 .translation-popup {
-  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
-  border: 1px solid #d1d8e0;
-  border-radius: 8px;
-  animation: fadeIn 0.3s ease-out;
-  position: relative;
-  z-index: 1002;
-  padding: 20px;
+  background: white;
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08);
+  animation: slideInUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: absolute;
+  z-index: 10001;
+  max-width: 300px;
+  width: auto;
+  overflow: hidden;
 }
 
+/* תוכן התרגום */
+.translation-popup > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.translation-popup > div:first-child {
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white;
+  padding: 15px 20px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  border-radius: 16px 16px 0 0;
+}
+
+.translation-popup > div:last-child {
+  padding: 15px 20px;
+  font-size: 18px;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 0 0 16px 16px;
+}
+
+/* חץ מצביע */
 .translation-popup[data-position="above"]::before {
   content: '';
   position: absolute;
-  bottom: -7px;
+  bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
-  border: 7px solid transparent;
-  border-top: 7px solid #d1d8e0;
+  border: 8px solid transparent;
+  border-top: 8px solid #ffffff;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1));
 }
 
 .translation-popup[data-position="below"]::before {
   content: '';
   position: absolute;
-  top: -7px;
+  top: -8px;
   left: 50%;
   transform: translateX(-50%);
-  border: 7px solid transparent;
-  border-bottom: 7px solid #d1d8e0;
+  border: 8px solid transparent;
+  border-bottom: 8px solid #4CAF50;
+  filter: drop-shadow(0 -2px 3px rgba(0, 0, 0, 0.05));
 }
 
-.translation-popup[data-position="above"]::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top: 6px solid #f5f7fa;
-}
-
-.translation-popup[data-position="below"]::after {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-bottom: 6px solid #ffffff;
-}
-
-/* Error Popup Styles */
+/* חלונית שגיאה */
 .error-popup {
-  animation: fadeIn 0.3s ease-out;
+  background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 10px 20px rgba(211, 47, 47, 0.3);
+  animation: fadeInUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  font-weight: 500;
+  max-width: 350px;
+  text-align: center;
 }
 
-/* Animation */
-@keyframes fadeIn {
+/* אנימציות */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInUp {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ריפרוש חלק יותר של החלוניות */
+.translation-popup, .error-popup, #wordToolbar {
+  will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
