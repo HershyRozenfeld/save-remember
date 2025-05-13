@@ -1,6 +1,4 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
-
     "manifest_version": 3,
     "name": "שמור וזכור - Learn English Words",
     "version": "1.0",
@@ -22,19 +20,14 @@
         }
     },
     "permissions": [
-        "storage"
+        "storage",
+        "notifications"
     ],
     "content_scripts": [
         {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "contentScript.js"
-            ],
-            "css": [
-                "contentStyle.css"
-            ]
+            "matches": ["<all_urls>"],
+            "js": ["contentScript.js"],
+            "css": ["contentStyle.css"]
         }
     ],
     "web_accessible_resources": [
@@ -50,9 +43,7 @@
                 "icon48.png",
                 "icon128.png"
             ],
-            "matches": [
-                "<all_urls>"
-            ]
+            "matches": ["<all_urls>"]
         }
     ]
 }

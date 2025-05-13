@@ -1,101 +1,3 @@
-// הוספת סגנונות דינמיים
-const style = document.createElement('style');
-style.textContent = `
-    .translation-popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        animation: fadeIn 0.3s ease-out;
-    }
-
-    .translation-content {
-        text-align: center;
-    }
-
-    .translation-popup .word {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    .translation-popup .translation {
-        font-size: 16px;
-        color: #666;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translate(-50%, -60%); }
-        to { opacity: 1; transform: translate(-50%, -50%); }
-    }
-
-    .score-animation {
-        position: absolute;
-        top: -20px;
-        right: 10px;
-        color: #4CAF50;
-        font-weight: bold;
-        animation: floatUp 1s ease-out forwards;
-    }
-
-    @keyframes floatUp {
-        from { opacity: 1; transform: translateY(0); }
-        to { opacity: 0; transform: translateY(-20px); }
-    }
-
-    .level-up-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        animation: fadeIn 0.3s ease-out;
-    }
-
-    .level-up-content {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-    }
-
-    .error-message {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #ff5252;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        animation: fadeIn 0.3s ease-out;
-    }
-
-    .success-message {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        animation: fadeIn 0.3s ease-out;
-    }
-`;
-document.head.appendChild(style);
-
 // Word management and display functions
 function displayWords(isDailyReview = false) {
     chrome.storage.local.get({ words: [], score: 0, level: 1 }, (result) => {
@@ -105,19 +7,20 @@ function displayWords(isDailyReview = false) {
         let wordsToDisplay = result.words;
         if (isDailyReview) {
             wordsToDisplay = wordsToDisplay.sort(() => 0.5 - Math.random()).slice(0, 10);
+            createWordGroup('מילות שינון יומי', wordsToDisplay, wordList);
         } else {
             const today = new Date(), yesterday = new Date(), lastWeek = new Date();
             yesterday.setDate(today.getDate() - 1);
             lastWeek.setDate(today.getDate() - 7);
-            const groups = { "Today": [], "Yesterday": [], "Previous 7 Days": [], olderWords: {} };
+            const groups = { "היום": [], "אתמול": [], "7 הימים האחרונים": [], olderWords: {} };
 
             wordsToDisplay.forEach((entry, index) => {
                 entry.originalIndex = index;
                 const wordDate = new Date(entry.date);
                 const wordMonthYear = `${wordDate.getMonth() + 1}/${wordDate.getFullYear()}`;
-                if (isSameDay(wordDate, today)) groups["Today"].push(entry);
-                else if (isSameDay(wordDate, yesterday)) groups["Yesterday"].push(entry);
-                else if (wordDate >= lastWeek) groups["Previous 7 Days"].push(entry);
+                if (isSameDay(wordDate, today)) groups["היום"].push(entry);
+                else if (isSameDay(wordDate, yesterday)) groups["אתמול"].push(entry);
+                else if (wordDate >= lastWeek) groups["7 הימים האחרונים"].push(entry);
                 else {
                     if (!groups.olderWords[wordMonthYear]) groups.olderWords[wordMonthYear] = [];
                     groups.olderWords[wordMonthYear].push(entry);
@@ -132,11 +35,6 @@ function displayWords(isDailyReview = false) {
                     createWordGroup(title, words.reverse(), wordList);
                 }
             });
-        }
-
-        if (isDailyReview) {
-            createWordGroup('Daily Review Words', wordsToDisplay, wordList);
-            launchCelebrationEffects();
         }
 
         addEventListeners(wordList, isDailyReview ? displayDailyReview : displayWords);
@@ -159,7 +57,7 @@ function createWordGroup(title, words, container) {
                 <span class="word-text">${entry.word}</span>
                 <div class="word-actions">
                     <button class="word-btn translate" data-word="${entry.word}">
-                        <i class="fas fa-language"></i>
+                        <i class t="fas fa-language"></i>
                     </button>
                     <button class="word-btn speak" data-word="${entry.word}">
                         <i class="fas fa-volume-up"></i>
@@ -218,7 +116,7 @@ function addEventListeners(wordList, refreshFn) {
                 showTranslationPopup(word, translation);
                 markWordAsReviewed(word);
             } catch (error) {
-                showError('Translation failed. Please try again.');
+                showError('תרגום נכשל. אנא נסה שוב.');
             }
         });
     });
@@ -247,58 +145,36 @@ function addNewWord() {
     const newWord = newWordInput.value.trim();
     const isEnglishWord = /^[a-zA-Z]+$/.test(newWord);
 
-    console.log('addNewWord called with word:', newWord); // Log for debugging
-
     if (!newWord) {
-        console.log('Empty word entered');
         wordInputMessage.textContent = 'אנא הזן מילה.';
         wordInputMessage.className = 'error-message';
-        setTimeout(() => {
-            wordInputMessage.textContent = '';
-            wordInputMessage.className = '';
-            console.log('Cleared error message');
-        }, 3000);
+        setTimeout(() => wordInputMessage.textContent = wordInputMessage.className = '', 3000);
         return;
     }
 
     if (!isEnglishWord) {
-        console.log('Non-English word entered:', newWord);
         wordInputMessage.textContent = 'אנא הזן מילה באנגלית בלבד.';
         wordInputMessage.className = 'error-message';
-        setTimeout(() => {
-            wordInputMessage.textContent = '';
-            wordInputMessage.className = '';
-            console.log('Cleared error message');
-        }, 3000);
+        setTimeout(() => wordInputMessage.textContent = wordInputMessage.className = '', 3000);
         return;
     }
 
     chrome.storage.local.get({ words: [] }, (result) => {
         const words = result.words;
         if (words.some(entry => entry.word.toLowerCase() === newWord.toLowerCase())) {
-            console.log('Word already exists:', newWord);
             wordInputMessage.textContent = 'המילה כבר קיימת ברשימה.';
             wordInputMessage.className = 'error-message';
-            setTimeout(() => {
-                wordInputMessage.textContent = '';
-                wordInputMessage.className = '';
-                console.log('Cleared error message');
-            }, 3000);
+            setTimeout(() => wordInputMessage.textContent = wordInputMessage.className = '', 3000);
             return;
         }
 
         words.push({ word: newWord, date: new Date().toLocaleDateString(), reviewed: false });
         chrome.storage.local.set({ words }, () => {
-            console.log('Word added successfully:', newWord);
             wordInputMessage.textContent = 'המילה נוספה בהצלחה!';
             wordInputMessage.className = 'success-message';
             newWordInput.value = '';
             displayWords();
-            setTimeout(() => {
-                wordInputMessage.textContent = '';
-                wordInputMessage.className = '';
-                console.log('Cleared success message');
-            }, 3000);
+            setTimeout(() => wordInputMessage.textContent = wordInputMessage.className = '', 3000);
         });
     });
 }
@@ -317,9 +193,7 @@ function updateScore(points) {
 
 function displayScore(score) {
     const scoreElement = document.getElementById('score');
-    if (scoreElement) {
-        scoreElement.textContent = `ניקוד: ${score}`;
-    }
+    if (scoreElement) scoreElement.textContent = `ניקוד: ${score}`;
 }
 
 function checkLevel(score) {
@@ -336,9 +210,7 @@ function checkLevel(score) {
 
 function displayLevel(level) {
     const levelElement = document.getElementById('level');
-    if (levelElement) {
-        levelElement.textContent = `שלב: ${level}`;
-    }
+    if (levelElement) levelElement.textContent = `שלב: ${level}`;
 }
 
 // Word Actions
@@ -348,12 +220,11 @@ function speakWord(word) {
         utterance.lang = 'en-US';
         utterance.rate = 0.9;
         utterance.pitch = 1;
-
         speechSynthesis.cancel();
         speechSynthesis.speak(utterance);
         markWordAsReviewed(word);
     } else {
-        showError('Speech synthesis is not supported in your browser.');
+        showError('הדפדפן אינו תומך בהשמעת דיבור.');
     }
 }
 
@@ -382,10 +253,7 @@ function showTranslationPopup(word, translation) {
         </div>
     `;
     document.body.appendChild(popup);
-
-    setTimeout(() => {
-        popup.remove();
-    }, 3000);
+    setTimeout(() => popup.remove(), 3000);
 }
 
 function showScoreAnimation(points) {
@@ -393,10 +261,7 @@ function showScoreAnimation(points) {
     animation.className = 'score-animation';
     animation.textContent = `+${points}`;
     document.getElementById('scoreContainer').appendChild(animation);
-
-    setTimeout(() => {
-        animation.remove();
-    }, 1000);
+    setTimeout(() => animation.remove(), 1000);
 }
 
 function showLevelUpAnimation(level) {
@@ -405,15 +270,12 @@ function showLevelUpAnimation(level) {
     overlay.innerHTML = `
         <div class="level-up-content">
             <i class="fas fa-trophy"></i>
-            <h2>Level Up!</h2>
-            <p>You've reached Level ${level}</p>
+            <h2>עלית שלב!</h2>
+            <p>הגעת לשלב ${level}</p>
         </div>
     `;
     document.body.appendChild(overlay);
-
-    setTimeout(() => {
-        overlay.remove();
-    }, 3000);
+    setTimeout(() => overlay.remove(), 3000);
 }
 
 function showError(message) {
@@ -421,10 +283,7 @@ function showError(message) {
     error.className = 'error-message';
     error.textContent = message;
     document.body.appendChild(error);
-
-    setTimeout(() => {
-        error.remove();
-    }, 3000);
+    setTimeout(() => error.remove(), 3000);
 }
 
 function showSuccess(message) {
@@ -432,10 +291,7 @@ function showSuccess(message) {
     success.className = 'success-message';
     success.textContent = message;
     document.body.appendChild(success);
-
-    setTimeout(() => {
-        success.remove();
-    }, 3000);
+    setTimeout(() => success.remove(), 3000);
 }
 
 function animateButton(button) {
@@ -454,7 +310,6 @@ function toggleView(show, hide, showBtn, hideBtn, displayFn) {
 
 function displayDailyReview() {
     displayWords(true);
-    chrome.runtime.sendMessage({ action: 'launchBubbles' });
 }
 
 // Utility Functions
@@ -462,10 +317,6 @@ function isSameDay(d1, d2) {
     return d1.getDate() === d2.getDate() &&
         d1.getMonth() === d2.getMonth() &&
         d1.getFullYear() === d2.getFullYear();
-}
-
-function launchCelebrationEffects() {
-    chrome.runtime.sendMessage({ action: 'launchBubbles' });
 }
 
 // Initialization
@@ -480,10 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleView('wordListSection', 'dailyReview', 'dailyReviewBtn', 'wordListBtn', displayWords);
     });
 
-    // Add event listener for adding new word
     document.getElementById('addWordButton').addEventListener('click', addNewWord);
-
-    // Add event listener for copying all words
     document.getElementById('copyWordsBtn').addEventListener('click', () => {
         copyAllWords();
         animateButton(document.getElementById('copyWordsBtn'));
@@ -501,8 +349,8 @@ function dailyNotification() {
             chrome.notifications.create('dailyReview', {
                 type: 'basic',
                 iconUrl: 'icon.png',
-                title: 'Time for Daily Review!',
-                message: 'Keep your vocabulary strong - review your words now!',
+                title: 'זמן לשינון יומי!',
+                message: 'שמור על אוצר המילים שלך - תרגל עכשיו!',
                 priority: 2
             });
             chrome.storage.local.set({ lastNotification: currentTime });

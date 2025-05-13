@@ -7,7 +7,7 @@
     --background-light: #f5f7fa;
     --background-dark: #e4e9f2;
     --text-primary: #2d3748;
-    --end-of-line--text-secondary: #4a5568;
+    --text-secondary: #4a5568;
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition-base: all 0.3s ease;
@@ -24,7 +24,7 @@ body {
     direction: rtl;
 }
 
-/* Word List Special Styling */
+/* Word List Styling */
 .word-list {
     direction: ltr !important;
     text-align: left !important;
@@ -137,7 +137,7 @@ body {
     border-radius: 12px;
     padding: 1rem;
     box-shadow: var(--shadow-sm);
-    position: relative; /* Ensure messages are positioned relative to .word-input */
+    position: relative;
 }
 
 .word-input input {
@@ -162,7 +162,7 @@ body {
 /* Message Styles */
 #wordInputMessage {
     font-size: 0.85rem;
-    min-height: 20px; /* Ensure space for message */
+    min-height: 20px;
     width: 100%;
     text-align: center;
     margin-top: 0.5rem;
@@ -182,12 +182,6 @@ body {
     padding: 8px;
     border-radius: 8px;
     animation: fadeIn 0.3s ease-out;
-}
-
-/* Animations for Messages */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Section Styles */
@@ -269,53 +263,102 @@ body {
     transform: scale(1.1);
 }
 
+/* Popups and Animations */
+.translation-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.translation-content {
+    text-align: center;
+}
+
+.translation-popup .word {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.translation-popup .translation {
+    font-size: 16px;
+    color: #666;
+}
+
+.score-animation {
+    position: absolute;
+    top: -20px;
+    right: 10px;
+    color: #4CAF50;
+    font-weight: bold;
+    animation: floatUp 1s ease-out forwards;
+}
+
+.level-up-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.level-up-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.error-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff5252;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.success-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    animation: fadeIn 0.3s ease-out;
+}
+
 /* Animations */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Floating Elements */
-.bubble {
-    background: linear-gradient(135deg, rgba(103, 178, 241, 0.4) 0%, rgba(61, 147, 231, 0.4) 100%);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    animation: floatUp 10s infinite ease-in-out;
-}
-
-.snowflake {
-    background: linear-gradient(135deg, #e879f9 0%, #d946ef 100%);
-    box-shadow: 0 0 10px rgba(232, 121, 249, 0.4);
-    border-radius: 50%;
-    animation: fall 5s linear infinite;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes floatUp {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(-1500px) rotate(360deg);
-        opacity: 0;
-    }
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
 }
 
-@keyframes fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(50vh) rotate(180deg) translateX(20px);
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-    }
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }

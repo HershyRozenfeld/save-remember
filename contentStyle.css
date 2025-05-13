@@ -1,105 +1,4 @@
-#addWordIcon {
-  transition: transform 0.2s;
-
-}
-
-.bubble {
-  position: fixed;
-  bottom: -50px;
-  /* התחל נמוך יותר */
-  background: rgba(22, 175, 225, 0.85);
-  /* נוריד את השקיפות ל-85% */
-  border-radius: 50%;
-  opacity: 1.85;
-  /* שקיפות גבוהה יותר */
-  animation: floatUp 10s infinite ease-in-out;
-  /* נשנה את משך האנימציה ל-10 שניות */
-  pointer-events: none;
-  /* מונע לחיצות על הבועות */
-  z-index: 9999;
-  /* הבועות מעל כל התוכן */
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0);
-    opacity: 0.85;
-  }
-
-  100% {
-    transform: translateY(-1500px);
-    /* הבועות יעלו גבוה יותר */
-    opacity: 0;
-  }
-}
-
-.snowflake {
-  position: fixed;
-  top: -10px;
-  background: rgb(222, 6, 139);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: fall 5s linear infinite;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
-
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-  }
-}/* Existing styles */
-#addWordIcon {
-  transition: transform 0.2s;
-}
-
-.bubble {
-  position: fixed;
-  bottom: -50px;
-  background: rgba(22, 175, 225, 0.85);
-  border-radius: 50%;
-  opacity: 1.85;
-  animation: floatUp 10s infinite ease-in-out;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0);
-    opacity: 0.85;
-  }
-  100% {
-    transform: translateY(-1500px);
-    opacity: 0;
-  }
-}
-
-.snowflake {
-  position: fixed;
-  top: -10px;
-  background: rgb(222, 6, 139);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: fall 5s linear infinite;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-  }
-}
-
-/* Updated styles for the toolbar */
+/* Toolbar Styles */
 #wordToolbar {
   background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
   border: 1px solid #d1d8e0;
@@ -121,7 +20,7 @@
   transform: scale(1.15);
 }
 
-/* Styles for translation popup */
+/* Translation Popup Styles */
 .translation-popup {
   background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
   border: 1px solid #d1d8e0;
@@ -129,10 +28,9 @@
   animation: fadeIn 0.3s ease-out;
   position: relative;
   z-index: 1002;
-  padding: 20px; /* Original padding */
+  padding: 20px;
 }
 
-/* Arrow for visual connection */
 .translation-popup[data-position="above"]::before {
   content: '';
   position: absolute;
@@ -153,7 +51,6 @@
   border-bottom: 7px solid #d1d8e0;
 }
 
-/* Inner arrow to match background */
 .translation-popup[data-position="above"]::after {
   content: '';
   position: absolute;
@@ -174,7 +71,7 @@
   border-bottom: 6px solid #ffffff;
 }
 
-/* Styles for error popup */
+/* Error Popup Styles */
 .error-popup {
   animation: fadeIn 0.3s ease-out;
 }
