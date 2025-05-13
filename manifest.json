@@ -1,0 +1,58 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "שמור וזכור - Learn English Words",
+    "version": "1.0",
+    "description": "למד אנגלית בקלות - שמור מילים חדשות תוך כדי גלישה ותרגל אותן באופן יומיומי",
+    "author": "Hershy Rozenfeld",
+    "icons": {
+        "16": "icon16.png",
+        "32": "icon32.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon16.png",
+            "32": "icon32.png",
+            "48": "icon48.png",
+            "128": "icon128.png"
+        }
+    },
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "contentScript.js"
+            ],
+            "css": [
+                "contentStyle.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "plus.png",
+                "check.png",
+                "play.png",
+                "trash.png",
+                "translate.png",
+                "icon16.png",
+                "icon32.png",
+                "icon48.png",
+                "icon128.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

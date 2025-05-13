@@ -1,0 +1,321 @@
+/* Base Styles */
+:root {
+    --primary-color: #4CAF50;
+    --primary-dark: #45a049;
+    --secondary-color: #667eea;
+    --accent-color: #764ba2;
+    --background-light: #f5f7fa;
+    --background-dark: #e4e9f2;
+    --text-primary: #2d3748;
+    --end-of-line--text-secondary: #4a5568;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition-base: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, var(--background-light) 0%, var(--background-dark) 100%);
+    margin: 0;
+    padding: 0;
+    min-width: 375px;
+    max-width: 500px;
+    color: var(--text-primary);
+    direction: rtl;
+}
+
+/* Word List Special Styling */
+.word-list {
+    direction: ltr !important;
+    text-align: left !important;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.app-container {
+    padding: 1.5rem;
+}
+
+/* Header Styles */
+.app-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.app-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.app-header i {
+    color: var(--primary-color);
+}
+
+/* Score Container */
+.score-container {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    box-shadow: var(--shadow-md);
+    margin-top: 1rem;
+}
+
+.score-item {
+    text-align: center;
+}
+
+.score-item i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.score-item h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Button Styles */
+.button-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.action-btn {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+/* Copy Button Specific Styles */
+.copy-btn {
+    flex: none;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    min-width: 40px;
+}
+
+/* Word Input Styles */
+.word-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+    position: relative; /* Ensure messages are positioned relative to .word-input */
+}
+
+.word-input input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--background-dark);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    min-width: 150px;
+}
+
+.word-input input::placeholder {
+    color: var(--text-secondary);
+}
+
+.word-input button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+}
+
+/* Message Styles */
+#wordInputMessage {
+    font-size: 0.85rem;
+    min-height: 20px; /* Ensure space for message */
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+#wordInputMessage.success-message {
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+#wordInputMessage.error-message {
+    background: #ff5252;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Animations for Messages */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Styles */
+.content-section {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--background-dark);
+}
+
+.section-header i {
+    color: var(--primary-color);
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.word-item {
+    background: var(--background-light);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: var(--transition-base);
+    border: 1px solid var(--background-dark);
+    direction: ltr !important;
+}
+
+.word-item:hover {
+    transform: translateX(4px);
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.word-text {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Action Buttons */
+.word-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.word-btn {
+    cursor: pointer;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.word-btn.active {
+    transform: scale(0.9);
+}
+
+.word-btn:hover {
+    background: var(--background-dark);
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Floating Elements */
+.bubble {
+    background: linear-gradient(135deg, rgba(103, 178, 241, 0.4) 0%, rgba(61, 147, 231, 0.4) 100%);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: floatUp 10s infinite ease-in-out;
+}
+
+.snowflake {
+    background: linear-gradient(135deg, #e879f9 0%, #d946ef 100%);
+    box-shadow: 0 0 10px rgba(232, 121, 249, 0.4);
+    border-radius: 50%;
+    animation: fall 5s linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-1500px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(50vh) rotate(180deg) translateX(20px);
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}

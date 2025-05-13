@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שמור וזכור</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1><i class="fas fa-book"></i> מאגר המילים שלי</h1>
+            <div class="score-container" id="scoreContainer">
+                <div class="score-item">
+                    <i class="fas fa-star"></i>
+                    <h2 id="score">ניקוד: 0</h2>
+                </div>
+                <div class="score-item">
+                    <i class="fas fa-trophy"></i>
+                    <h2 id="level">רמה: 1</h2>
+                </div>
+            </div>
+        </header>
+
+        <div class="button-container">
+            <button class="action-btn" id="dailyReviewBtn">
+                <i class="fas fa-sync-alt"></i> שינון יומי
+            </button>
+            <button class="action-btn" id="wordListBtn" style="display: none;">
+                <i class="fas fa-list"></i> רשימת מילים
+            </button>
+        </div>
+
+        <div class="word-input">
+            <input type="text" id="newWordInput" placeholder="הזן מילה חדשה...">
+            <button class="action-btn" id="addWordButton">
+                <i class="fas fa-plus"></i> הוסף
+            </button>
+            <div id="wordInputMessage"></div>
+        </div>
+
+        <section id="dailyReview" class="content-section" style="display: none;">
+            <h2><i class="fas fa-sync-alt"></i> שינון יומי</h2>
+            <ul id="dailyWordList" class="word-list"></ul>
+        </section>
+
+        <section id="wordListSection" class="content-section">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2><i class="fas fa-book"></i> אוצר המילים שלי</h2>
+                <button class="action-btn copy-btn" id="copyWordsBtn" title="העתק את כל המילים">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <ul id="wordList" class="word-list"></ul>
+        </section>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
